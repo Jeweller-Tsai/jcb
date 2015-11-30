@@ -1,0 +1,41 @@
+<h2>Listing transactions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Recipient</th>
+      <th>Reason</th>
+      <th>Time</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% user = current_user(@conn) %>
+
+<%= for transaction <- @transactions do %>
+    <tr>
+      <td><%= transaction.user.username %></td>
+      <td><%= transaction.recipient.username %></td>
+      <td><%= transaction.reason %></td>
+      <td><%= transaction.inserted_at %></td>
+
+      <td class="text-right">
+        <%= if user && user.id == transaction.user_id do %>
+          <%= link "Edit", to: transaction_path(@conn, :edit, transaction), class: "btn btn-default btn-xs" %>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "NEW", to: transaction_path(@conn, :new) %>
+<%= if @prev do %>
+  <%= link "PREV", to: transaction_path(@conn, :index, page: @prev) %>
+<% end %>
+<%= if @next do %>
+  <%= link "NEXT", to: transaction_path(@conn, :index, page: @next) %>
+<% end %>

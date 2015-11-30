@@ -1,0 +1,9 @@
+<div>
+  <ul>
+    <%= for user <- @users do %>
+      <li>
+    <%= link user.username, to: transaction_path(@conn, :mine, user.id) %>
+    </li>
+  <% end %>
+  </ul>
+</div>

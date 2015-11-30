@@ -1,0 +1,44 @@
+<h2>Received <%= length @received %> JCBs this month</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Reason</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for transaction <- @received do %>
+      <tr>
+        <td><%= transaction.user.username %></td>
+        <td><%= transaction.reason %></td>
+        <td><%= transaction.inserted_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Gave <%= length @gave %> JCBs this month</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>To</th>
+      <th>Reason</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% user = current_user(@conn) %>
+
+    <%= for transaction <- @gave do %>
+      <tr>
+        <td><%= transaction.recipient.username %></td>
+        <td><%= transaction.reason %></td>
+        <td><%= transaction.inserted_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link "NEW", to: transaction_path(@conn, :new) %>

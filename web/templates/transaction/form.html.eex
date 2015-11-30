@@ -1,0 +1,28 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below:</p>
+      <ul>
+        <%= for {attr, message} <- f.errors do %>
+          <li><%= humanize(attr) %> <%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :recipient_name, "Recipient", class: "control-label" %>
+    <%= text_input f, :recipient_name, class: "form-control", id: "recipient-name", autocomplete: "off" %>
+    <div id="usernames" class="dropdown">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :reason, "Reason", class: "control-label" %>
+    <%= textarea f, :reason, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
